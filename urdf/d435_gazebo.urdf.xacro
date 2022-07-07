@@ -165,7 +165,7 @@
                 <depthTopicName>/depth/image_rect_raw</depthTopicName>
                 <depthCameraInfoTopicName>/depth/camera_info</depthCameraInfoTopicName>
                 <depthOpticalframeName>${cloud_frame}</depthOpticalframeName>
-                <depthNoiseStddev>0.1</depthNoiseStddev>
+                <depthNoiseStddev>0.02</depthNoiseStddev>
                 <depthDropout>0.1</depthDropout>
                 <colorTopicName>/color/image_raw</colorTopicName>
                 <colorCameraInfoTopicName>/color/camera_info</colorCameraInfoTopicName>

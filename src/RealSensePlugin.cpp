@@ -260,20 +260,23 @@ void RealSensePlugin::OnNewDepthFrame() {
   // Instantiate message
   msgs::ImageStamped msg;
 
+  // Copy and modify depthData
+  this->depthData_.reset(new float[imageSize]);
+  std::memcpy(this->depthData_.get(), this->depthCam->DepthData(), imageSize * sizeof(float));
+
   // Convert Float depth data to RealSense depth data
-  const float *depthDataFloat = this->depthCam->DepthData();
   for (unsigned int i = 0; i < imageSize; ++i) {
     double drop = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
     // Check clipping and overflow
-    if (depthDataFloat[i] < rangeMinDepth_ ||
-        depthDataFloat[i] > rangeMaxDepth_ ||
-        depthDataFloat[i] > DEPTH_SCALE_M * UINT16_MAX ||
-        depthDataFloat[i] < 0 || drop > (1.0 - this->depthDropout_)) {
-      this->depthMap[i] = 0;
+    if (this->depthData_[i] < rangeMinDepth_ ||
+        this->depthData_[i] > rangeMaxDepth_ ||
+        this->depthData_[i] > DEPTH_SCALE_M * UINT16_MAX ||
+        this->depthData_[i] < 0 || drop > (1.0 - this->depthDropout_)) {
+      this->depthData_[i] = this->depthMap[i] = 0;
     } else {
-      this->depthMap[i] =
-          (uint16_t)(depthDataFloat[i] * (1.0 + this->nDist_(this->gen_)) /
-                     DEPTH_SCALE_M);
+      this->depthData_[i] =
+          this->depthData_[i] * (1.0 + this->nDist_(this->gen_));
+      this->depthMap[i] = (uint16_t)(this->depthData_[i] / DEPTH_SCALE_M);
     }
   }
 

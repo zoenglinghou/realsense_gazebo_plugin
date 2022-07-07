@@ -141,6 +141,8 @@ protected:
   float rangeMinDepth_;
   float rangeMaxDepth_;
 
+  std::unique_ptr<float[]> depthData_;
+
 private:
   // Depth noise generator
   std::random_device rd_{};
