@@ -7,6 +7,7 @@ if (gazebo_ros_FOUND)
     # Load catkin and all dependencies required for this package
     find_package(catkin REQUIRED COMPONENTS
             roscpp
+            gazebo_dev
             image_transport
             camera_info_manager
             sensor_msgs
@@ -18,6 +19,7 @@ if (gazebo_ros_FOUND)
             DEPENDS
             roscpp
             gazebo_ros
+            gazebo_dev
             image_transport
             camera_info_manager
             sensor_msgs
