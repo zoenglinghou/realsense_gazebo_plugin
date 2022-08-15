@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(realsense_gazebo_plugin)
 
 # Ignore packages in this directory if gazebo is not present
-find_package(gazebo_ros)
+find_package(gazebo_ros QUIET)
 if (gazebo_ros_FOUND)
     # Load catkin and all dependencies required for this package
     find_package(catkin REQUIRED COMPONENTS
@@ -54,4 +54,8 @@ if (gazebo_ros_FOUND)
     #    install(DIRECTORY ${dir}/
     #            DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/${dir})
     #endforeach (dir)
+else ()
+    # Dummy Install
+    install(FILES README.md
+            DESTINATION /tmp)
 endif ()
